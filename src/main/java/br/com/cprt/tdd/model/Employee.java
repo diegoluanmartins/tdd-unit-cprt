@@ -1,10 +1,12 @@
 package br.com.cprt.tdd.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 public class Employee {
 
+	private static final int SALARY_ROUND_SCALE = 2;
 	private String name;
 	private LocalDate admissionDate;
 	private BigDecimal salary;
@@ -29,6 +31,11 @@ public class Employee {
 
     public void updateSalaryByPercentual(BigDecimal percentualSalaryUpdate) {
 		this.salary = this.salary.multiply(BigDecimal.ONE.add(percentualSalaryUpdate));
+		roundSalary();
     }
+
+	private void roundSalary() {
+		this.salary = this.salary.setScale(SALARY_ROUND_SCALE, RoundingMode.HALF_UP);
+	}
 
 }
